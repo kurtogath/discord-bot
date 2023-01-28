@@ -1,5 +1,6 @@
 import { Client, ClientOptions, GatewayIntentBits, Message } from 'discord.js';
 import { config } from 'dotenv';
+import { EMOJIS } from './utils';
 config();
 
 const token = process.env.TOKEN;
@@ -24,15 +25,24 @@ client.on('messageCreate', async (message: Message) => {
     //Do something with the message
     //TODO: Limit chanels to use maybe
     const contentMessage: string = message.content;
-    const idBot: string = process.env.BOT_ID ? process.env.BOT_ID : '';
-    if (message.author.id === idBot) {
+    
+    if (message.author.bot) {
         return;
     }
 
     if (contentMessage.startsWith(`!`)) {
         //If the message it's a command
-        
+        switch (contentMessage) {
+            case '!twitch':
+                const urlTwitch: string = process.env.TWITCH_LINK;
+                message.channel.send(
+                    `Aqui tienes el link de los directos del panita ${urlTwitch} ${EMOJIS.KurtoLove}  ${EMOJIS.PeepoLove}`
+                );
+                break;
+            default:
+                break;
+        }
     }
 });
 
-client.login(process.env.TOKEN);
+client.login(token);
