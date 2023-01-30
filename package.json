@@ -10,18 +10,59 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
+    "eslintConfig": {
+        "parser": "@typescript-eslint/parser",
+        "plugins": [
+            "@typescript-eslint/eslint-plugin"
+        ],
+        "extends": [
+            "plugin:@typescript-eslint/recommended",
+            "prettier"
+        ],
+        "root": true,
+        "env": {
+            "node": true,
+            "jest": true
+        },
+        "ignorePatterns": [
+            ".eslintrc.js"
+        ],
+        "rules": {
+            "indent": [
+                "error",
+                4,
+                {
+                    "SwitchCase": 1
+                }
+            ],
+            "no-unused-vars": [
+                "warn",
+                {
+                    "argsIgnorePattern": "^_",
+                    "varsIgnorePattern": "^_"
+                }
+            ]
+        },
+        "parserOptions": {
+            "project": "tsconfig.json",
+            "ecmaVersion": 6,
+            "sourceType": "module"
+        }
+    },
     "author": "",
     "license": "ISC",
     "dependencies": {
         "@types/node": "^18.11.18",
         "discord.js": "^14.7.1",
-        "eslint": "8.31.0",
-        "eslint-config-airbnb": "^19.0.4",
         "typescript": "4.9.4"
     },
     "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "5.47.1",
+        "@typescript-eslint/parser": "5.47.1",
         "dotenv": "^16.0.3",
+        "eslint": "7.32.0",
+        "eslint-config-prettier": "^8.6.0",
         "nodemon": "^2.0.20",
-        "prettier": "2.8.1"
+        "prettier": "^2.8.3"
     }
 }
