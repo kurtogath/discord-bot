@@ -11,8 +11,8 @@ const clientParams: ClientOptions = {
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildBans,
         GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent,
-    ],
+        GatewayIntentBits.MessageContent
+    ]
 };
 
 const client: Client = new Client(clientParams);
@@ -25,10 +25,8 @@ client.on('messageCreate', async (message: Message) => {
     //Do something with the message
     //TODO: Limit chanels to use maybe
     const contentMessage: string = message.content;
-    
-    if (message.author.bot) {
-        return;
-    }
+
+    if (message.author.bot) return;
 
     if (contentMessage.startsWith(`!`)) {
         //If the message it's a command
