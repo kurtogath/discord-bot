@@ -1,3 +1,5 @@
+import { MessageType } from "../enums";
+
 export interface GetToken {
     acces_token: string;
     expires_in: number;
@@ -20,7 +22,7 @@ export interface TwitchUser {
 export interface SocketWelcomeMessage {
     metadata: {
         message_id: string;
-        message_type: string;
+        message_type: MessageType;
         message_timestamp: string;
         subscription_type?: string;
         subscription_version?: string;
