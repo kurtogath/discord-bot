@@ -1,6 +1,6 @@
 export enum EMOJIS {
     //TwitchEmojis
-    KurtoLove= '<:KurtoLove:891240764850470913>',
+    KurtoLove = '<:KurtoLove:891240764850470913>',
     KurtoHi = '<:KurtoHi:891240714921443368>',
     KurtoLink = '<:KurtoLink:891240794915242015>',
     //Custom Emojis
@@ -16,4 +16,29 @@ export enum EMOJIS {
     PepoHearth = '<:PepoHearth:877245274765008958>',
     PepoShy = '<:PepoShy:877245252535193642>',
     Sadge = '<:Sadge:877245262630907994>',
+    //------------------------
+    CAUGHT = '<:CAUGHT:1215965460391133224>',
+    COMOROMPESLASPELOTAS = '<:COMOROMPESLASPELOTAS:1215965484584009789>',
+    Cinema = '<:Cinema:1215965474311897108>',
+    Fachenkro = '<:Fachenkro:1215965496399102032>',
+    Flirt = '<:Flirt:1215965506977140776>',
+    HUH = '<:HUH:1215965566888837231>',
+    Hehe = '<:Hehe:1215965518994079814>',
+    Madge = '<:Madge:1215965586958454834>',
+    Prayge = '<:Prayge:1215965679585329163>',
+    SAJ = '<:SAJ:1215965715345969183>',
+    Stabge = '<:Stabge:1215965740390154413>',
+    Susge = '<:Susge:1215965752037998685>',
+    Thinking = '<:Thinking:1215965763169423490>',
+    Thinking2 = '<:Thinking2:1215965774263488573>',
+    hmjj = '<:hmjj:1215965533359308891>',
+    hugg = '<:hugg:1215965547661889586>',
+    linkk = '<:linkk:1215965576153923604>',
+    nise = '<:nise:1215965600745127966>',
+    o7 = '<:o7:1215965612275404810>',
+    peepoIgnore = '<:peepoIgnore:1215965622098202714>',
+    peepoLink = '<:peepoLink:1215965634865922068>',
+    peepoSip = '<:peepoSip:1215965646815232032>',
+    pendejo = '<:pendejo:1215965661055160400>',
+    shocked = '<:shocked:1215965728608620644> '
 }
