@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 import { requireEnv } from '../../utils';
 import { getValidAccessToken } from './tokenManager';
@@ -13,8 +12,8 @@ export async function clearTwitchSubscriptions() {
     const subsResponse = await axios.get(TWITCH_API_URL, {
         headers: {
             'Client-ID': clientId,
-            'Authorization': `Bearer ${accessToken}`
-        }
+            Authorization: `Bearer ${accessToken}`,
+        },
     });
 
     const subs = subsResponse.data.data;
@@ -29,11 +28,11 @@ export async function clearTwitchSubscriptions() {
         await axios.delete(TWITCH_API_URL, {
             headers: {
                 'Client-ID': clientId,
-                'Authorization': `Bearer ${accessToken}`
+                Authorization: `Bearer ${accessToken}`,
             },
             params: {
-                id: sub.id
-            }
+                id: sub.id,
+            },
         });
         console.log(`[Twitch] Eliminada suscripción con ID: ${sub.id}`);
     }

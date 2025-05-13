@@ -1,4 +1,4 @@
-import { MessageType } from "../enums";
+import { MessageType } from '../enums';
 
 export interface GetToken {
     acces_token: string;

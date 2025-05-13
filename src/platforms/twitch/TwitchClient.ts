@@ -10,18 +10,20 @@ import { subscribeToTwitchEvents } from './subscribe';
 
 const postgreSQL = PostgreSQL.getInstance();
 
-async function sendLiveMessage(discordClient: DiscordClient){
+async function sendLiveMessage(discordClient: DiscordClient) {
     const urlTwitch: string = requireEnv('TWITCH_LINK');
 
     const canalId = requireEnv('DISCORD_CANAL_TEST');
-    const EN_VIVO = await getTextChannelSafe(discordClient, canalId);           
+    const EN_VIVO = await getTextChannelSafe(discordClient, canalId);
 
     if (EN_VIVO) {
         EN_VIVO.send(
             `${EMOJIS.KurtoLink} Tu streamer favorito está en directo! ${EMOJIS.KurtoLove} ${EMOJIS.PeepoLove} ${urlTwitch}`
         );
     } else {
-        console.error('[Twitch] EN_VIVO es undefined. No se pudo enviar el mensaje en el canal DISCORD_CANAL_EN_DIRECTO.');
+        console.error(
+            '[Twitch] EN_VIVO es undefined. No se pudo enviar el mensaje en el canal DISCORD_CANAL_EN_DIRECTO.'
+        );
     }
 }
 
@@ -35,14 +37,20 @@ export function startTwitchIntegration(discordClient: DiscordClient) {
     twitchSocket.on('message', async (message: WebSocket.Data) => {
         const buffer = Buffer.from(message as ArrayBuffer);
         const messageAsString = buffer.toString();
-        const messageAsObject: SocketWelcomeMessage = JSON.parse(messageAsString);
-    
+        const messageAsObject: SocketWelcomeMessage =
+            JSON.parse(messageAsString);
+
         //Obtenemos notificacion del socket de Twitch
-        if (messageAsObject.metadata?.message_type === MessageType.Notificacion) {
-            await sendLiveMessage(discordClient)
+        if (
+            messageAsObject.metadata?.message_type === MessageType.Notificacion
+        ) {
+            await sendLiveMessage(discordClient);
         }
 
-        if (messageAsObject.metadata?.message_type === MessageType.SessionWelcome) {
+        if (
+            messageAsObject.metadata?.message_type ===
+            MessageType.SessionWelcome
+        ) {
             const sessionId = messageAsObject.payload?.session?.id ?? '';
 
             try {
@@ -60,11 +68,13 @@ export function startTwitchIntegration(discordClient: DiscordClient) {
                 //Limpiamos todas las subscripciones cuando se inicia el bot
                 await clearTwitchSubscriptions();
                 //Creamos la susbcripcion cuando se inicia el bot
-                const twitchUserId = requireEnv('TWITCH_USER_ID')
+                const twitchUserId = requireEnv('TWITCH_USER_ID');
                 await subscribeToTwitchEvents(sessionId, twitchUserId);
-
             } catch (error) {
-                console.error('[Twitch] Error al registrar sesión o suscribirse:', error);
+                console.error(
+                    '[Twitch] Error al registrar sesión o suscribirse:',
+                    error
+                );
             }
         }
     });

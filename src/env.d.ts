@@ -15,11 +15,10 @@ declare global {
             user: string;
             password: string;
             database: string;
-            DISCORD_CANAL_EN_DIRECTO:string;
-            DISCORD_CANAL_BIENVENIDA:string;
+            DISCORD_CANAL_EN_DIRECTO: string;
+            DISCORD_CANAL_BIENVENIDA: string;
         }
     }
 }
 
-export { };
-
+export {};

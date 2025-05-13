@@ -40,5 +40,5 @@ export enum EMOJIS {
     peepoLink = '<:peepoLink:1215965634865922068>',
     peepoSip = '<:peepoSip:1215965646815232032>',
     pendejo = '<:pendejo:1215965661055160400>',
-    shocked = '<:shocked:1215965728608620644> '
+    shocked = '<:shocked:1215965728608620644> ',
 }

@@ -8,11 +8,11 @@ export class PostgreSQL {
     private static instance: PostgreSQL;
     private pool: Pool;
 
-    private host = requireEnv("host")
-    private port =  Number(requireEnv("port"))
-    private user =  requireEnv("user")
-    private password =  requireEnv("password")
-    private database =  requireEnv("database")
+    private host = requireEnv('host');
+    private port = Number(requireEnv('port'));
+    private user = requireEnv('user');
+    private password = requireEnv('password');
+    private database = requireEnv('database');
 
     private constructor() {
         this.pool = new Pool({

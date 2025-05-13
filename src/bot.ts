@@ -15,8 +15,8 @@ const clientParams: ClientOptions = {
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildBans,
         GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent
-    ]
+        GatewayIntentBits.MessageContent,
+    ],
 };
 
 const client: Client = new Client(clientParams);
@@ -25,9 +25,8 @@ client.on('ready', async () => {
     console.log('BOT ONLINE!!!');
 
     try {
-
     } catch (error) {
-        await logError("client.on => Ready",error);
+        await logError('client.on => Ready', error);
         console.error('Error al interactuar con la base de datos:', error);
     }
 });
@@ -40,39 +39,47 @@ client.on('messageCreate', async (message: Message) => {
     if (contentMessage.startsWith(`!`)) {
         switch (contentMessage) {
             case '!twitch':
-                const urlTwitch: string = requireEnv('TWITCH_LINK')?? '';
+                const urlTwitch: string = requireEnv('TWITCH_LINK') ?? '';
                 message.channel.send(
                     `Aqui tienes el link de los directos del panita ${EMOJIS.KurtoLove}  ${EMOJIS.PeepoLove} ${urlTwitch}`
                 );
                 break;
             case '!status':
                 try {
-                    const { getValidAccessToken } = await import('./platforms/twitch/tokenManager');
+                    const { getValidAccessToken } = await import(
+                        './platforms/twitch/tokenManager'
+                    );
                     const accessToken = await getValidAccessToken();
                     const clientId = requireEnv('TWITCH_CLIENT_ID');
-                
+
                     const res = await fetch(TWITCH_API_URL, {
                         headers: {
                             'Client-ID': clientId,
-                            'Authorization': `Bearer ${accessToken}`
-                        }
+                            Authorization: `Bearer ${accessToken}`,
+                        },
                     });
-                
+
                     const data = await res.json();
-                
+
                     if (res.ok && data.data?.length > 0) {
                         const subs = data.data
                             .filter((s: any) => s.type === 'stream.online')
                             .map((s: any) => `🟢 ${s.type} (ID: ${s.id})`)
                             .join('\n');
-                
-                        message.channel.send(`📡 **Suscripciones activas:**\n${subs}`);
+
+                        message.channel.send(
+                            `📡 **Suscripciones activas:**\n${subs}`
+                        );
                     } else {
-                        message.channel.send('⚠️ No hay suscripciones activas detectadas.');
+                        message.channel.send(
+                            '⚠️ No hay suscripciones activas detectadas.'
+                        );
                     }
                 } catch (error) {
                     await logError('!status command', error);
-                    message.channel.send('❌ Error al consultar el estado. Revisa los logs.');
+                    message.channel.send(
+                        '❌ Error al consultar el estado. Revisa los logs.'
+                    );
                 }
                 break;
 
@@ -84,4 +91,4 @@ client.on('messageCreate', async (message: Message) => {
 
 client.login(token);
 
-startTwitchIntegration(client)
+startTwitchIntegration(client);

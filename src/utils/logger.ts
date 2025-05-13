@@ -20,7 +20,10 @@ export async function logError(context: string, error: unknown) {
             [context, message, stack]
         );
     } catch (dbError) {
-        console.error('[Logger] Error al guardar en la base de datos:', dbError);
+        console.error(
+            '[Logger] Error al guardar en la base de datos:',
+            dbError
+        );
         console.error('[Logger] Error original:', message, stack);
     }
 }
