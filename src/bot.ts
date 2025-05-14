@@ -1,8 +1,10 @@
-import { Client, ClientOptions, GatewayIntentBits, Message } from 'discord.js';
+import { Client, ClientOptions, GatewayIntentBits, Message, Partials } from 'discord.js';
 import { config } from 'dotenv';
+import { handleGuildMemberAdd } from './events/onGuildMemberAdd';
 import { startTwitchIntegration } from './platforms/twitch/TwitchClient';
 import { EMOJIS, requireEnv } from './utils';
 import { logError } from './utils/logger';
+
 
 config();
 
@@ -16,7 +18,9 @@ const clientParams: ClientOptions = {
         GatewayIntentBits.GuildBans,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildMembers 
     ],
+    partials: [Partials.Message, Partials.Channel, Partials.Reaction, Partials.GuildMember, Partials.User],
 };
 
 const client: Client = new Client(clientParams);
@@ -88,6 +92,13 @@ client.on('messageCreate', async (message: Message) => {
         }
     }
 });
+
+client.on('guildMemberAdd', (member) => {
+    //Mensaje bienvendia y asignamos rol
+    handleGuildMemberAdd(member, client)
+    
+});
+
 
 client.login(token);
 

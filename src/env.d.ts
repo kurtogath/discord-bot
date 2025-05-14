@@ -17,8 +17,12 @@ declare global {
             database: string;
             DISCORD_CANAL_EN_DIRECTO: string;
             DISCORD_CANAL_BIENVENIDA: string;
+            DISCORD_CANAL_TEST: string;
+            DISCORD_ROL_USER:string;
+            DISCORD_GUILD_ID:string;
         }
     }
 }
 
-export {};
+export { };
+

@@ -1,4 +1,5 @@
-import { Client, TextChannel } from 'discord.js';
+import { Client, GuildMember, TextChannel } from 'discord.js';
+import { requireEnv } from './env';
 import { logError } from './logger';
 
 /**
@@ -25,3 +26,30 @@ export async function getTextChannelSafe(
         return null;
     }
 }
+
+export async function addRole(
+    member: GuildMember,
+    client: Client
+): Promise<boolean> {
+    try {
+        //Obtenemos los datos
+        const roleId = requireEnv("DISCORD_ROL_USER")
+        const guildId = requireEnv("DISCORD_GUILD_ID")
+        
+        const guild = await client.guilds.fetch(guildId);
+        const roles = await guild.roles.fetch(); // trae todos los roles
+        const role = roles?.find((r) => r.id === roleId);
+        
+        if (role) {
+            await member.roles.add(role);
+            console.log(`Rol '${role.name}' asignado a ${member.user.tag}`);
+            return true
+        }
+        await logError('getRoleSafe', `No se ha podido asignar el rol a ${member.user.tag}`);
+        return false
+    } catch (error) {
+        await logError('getRoleSafe', error);
+        return false;
+    }
+}
+
