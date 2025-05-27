@@ -1,5 +1,6 @@
 import { Client, GuildMember, TextChannel } from 'discord.js';
-import { requireEnv } from './env';
+import { ConfigKeys } from '../enums/config';
+import { getConfigData } from './getConfig';
 import { logError } from './logger';
 
 /**
@@ -33,23 +34,25 @@ export async function addRole(
 ): Promise<boolean> {
     try {
         //Obtenemos los datos
-        const roleId = requireEnv("DISCORD_ROL_USER")
-        const guildId = requireEnv("DISCORD_GUILD_ID")
-        
+        const roleId = await getConfigData(ConfigKeys.DISCORD_ROL_USER);
+        const guildId = await getConfigData(ConfigKeys.DISCORD_GUILD_ID);
+
         const guild = await client.guilds.fetch(guildId);
         const roles = await guild.roles.fetch(); // trae todos los roles
         const role = roles?.find((r) => r.id === roleId);
-        
+
         if (role) {
             await member.roles.add(role);
             console.log(`Rol '${role.name}' asignado a ${member.user.tag}`);
-            return true
+            return true;
         }
-        await logError('getRoleSafe', `No se ha podido asignar el rol a ${member.user.tag}`);
-        return false
+        await logError(
+            'getRoleSafe',
+            `No se ha podido asignar el rol a ${member.user.tag}`
+        );
+        return false;
     } catch (error) {
         await logError('getRoleSafe', error);
         return false;
     }
 }
-

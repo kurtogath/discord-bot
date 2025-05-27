@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { requireEnv } from '../../utils';
+import { ConfigKeys } from '../../enums/config';
+import { getConfigData } from '../../utils/getConfig';
 import { logError } from '../../utils/logger';
 import { getAccessToken } from './getAccessToken';
 
-const TWITCH_API_URL = requireEnv('TWITCH_API_URL');
 
 //Suscribe to socket
 export async function subscribeToTwitchEvents(
@@ -11,7 +11,8 @@ export async function subscribeToTwitchEvents(
     broadcasterId: string
 ) {
     const accessToken = await getAccessToken();
-    const clientId = requireEnv('TWITCH_CLIENT_ID');
+    const TWITCH_API_URL = await getConfigData(ConfigKeys.TWITCH_API_URL);
+    const clientId = await getConfigData(ConfigKeys.TWITCH_CLIENT_ID);
 
     try {
         const response = await axios.post(

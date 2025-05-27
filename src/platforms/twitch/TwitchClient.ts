@@ -2,18 +2,20 @@ import { Client as DiscordClient } from 'discord.js';
 import WebSocket from 'ws';
 import { PostgreSQL } from '../../db/PostgreSQL';
 import { MessageType } from '../../enums';
+import { ConfigKeys } from '../../enums/config';
 import { SocketWelcomeMessage } from '../../types';
-import { EMOJIS, requireEnv } from '../../utils';
+import { EMOJIS } from '../../utils';
 import { getTextChannelSafe } from '../../utils/discord';
+import { getConfigData } from '../../utils/getConfig';
 import { clearTwitchSubscriptions } from './clearTwitchSubscriptions';
 import { subscribeToTwitchEvents } from './subscribe';
 
 const postgreSQL = PostgreSQL.getInstance();
 
 async function sendLiveMessage(discordClient: DiscordClient) {
-    const urlTwitch: string = requireEnv('TWITCH_LINK');
+    const urlTwitch: string = await getConfigData(ConfigKeys.TWITCH_LINK);
 
-    const canalId = requireEnv('DISCORD_CANAL_TEST');
+    const canalId = await getConfigData(ConfigKeys.DISCORD_CANAL_TEST);
     const EN_VIVO = await getTextChannelSafe(discordClient, canalId);
 
     if (EN_VIVO) {
@@ -68,7 +70,7 @@ export function startTwitchIntegration(discordClient: DiscordClient) {
                 //Limpiamos todas las subscripciones cuando se inicia el bot
                 await clearTwitchSubscriptions();
                 //Creamos la susbcripcion cuando se inicia el bot
-                const twitchUserId = requireEnv('TWITCH_USER_ID');
+                const twitchUserId = await getConfigData(ConfigKeys.TWITCH_USER_ID);
                 await subscribeToTwitchEvents(sessionId, twitchUserId);
             } catch (error) {
                 console.error(

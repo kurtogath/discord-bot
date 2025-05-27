@@ -6,7 +6,10 @@ import {
     TextChannel,
 } from 'discord.js';
 
-export async function sendWelcomeImage(member: GuildMember, channel: TextChannel) {
+export async function sendWelcomeImage(
+    member: GuildMember,
+    channel: TextChannel
+) {
     const canvas = createCanvas(600, 300);
     const ctx = canvas.getContext('2d');
 
@@ -15,8 +18,11 @@ export async function sendWelcomeImage(member: GuildMember, channel: TextChannel
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     try {
-    // Cargar avatar (forzamos .png)
-        const avatarURL = member.user.displayAvatarURL({ size: 512, extension: 'png' });
+        // Cargar avatar (forzamos .png)
+        const avatarURL = member.user.displayAvatarURL({
+            size: 512,
+            extension: 'png',
+        });
         const avatar = await loadImage(avatarURL);
 
         // Coordenadas centradas
@@ -27,7 +33,13 @@ export async function sendWelcomeImage(member: GuildMember, channel: TextChannel
         // Recorte circular
         ctx.save();
         ctx.beginPath();
-        ctx.arc(x + avatarSize / 2, y + avatarSize / 2, avatarSize / 2, 0, Math.PI * 2);
+        ctx.arc(
+            x + avatarSize / 2,
+            y + avatarSize / 2,
+            avatarSize / 2,
+            0,
+            Math.PI * 2
+        );
         ctx.closePath();
         ctx.clip();
         ctx.drawImage(avatar, x, y, avatarSize, avatarSize);
@@ -37,16 +49,22 @@ export async function sendWelcomeImage(member: GuildMember, channel: TextChannel
         ctx.fillStyle = '#ffffff';
         ctx.font = 'bold 24px Sans';
         ctx.textAlign = 'center';
-        ctx.fillText(`¡Bienvenido, ${member.user.username}!`, canvas.width / 2, canvas.height - 30);
+        ctx.fillText(
+            `¡Bienvenido, ${member.user.username}!`,
+            canvas.width / 2,
+            canvas.height - 30
+        );
 
         // Crear imagen adjunta
-        const attachment = new AttachmentBuilder(canvas.toBuffer(), { name: 'welcome.png' });
+        const attachment = new AttachmentBuilder(canvas.toBuffer(), {
+            name: 'welcome.png',
+        });
 
         // Crear embed con la imagen
         const embed = new EmbedBuilder()
             .setColor(0x2b2d31)
             .setTitle('🎉 Nuevo miembro en la comunidad')
-            .setImage('attachment://welcome.png')
+            .setImage('attachment://welcome.png');
 
         // Enviar mensaje de texto + embed
         await channel.send({
@@ -58,6 +76,8 @@ export async function sendWelcomeImage(member: GuildMember, channel: TextChannel
         console.error('Error generando la imagen de bienvenida:', error);
 
         // Fallback por si falla canvas o avatar
-        await channel.send(`👋 ¡Bienvenido/a al servidor, <@${member.id}>! (no se pudo cargar la imagen 😢)`);
+        await channel.send(
+            `👋 ¡Bienvenido/a al servidor, <@${member.id}>! (no se pudo cargar la imagen 😢)`
+        );
     }
 }

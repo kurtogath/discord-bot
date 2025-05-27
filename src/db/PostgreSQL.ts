@@ -1,6 +1,7 @@
 import { config } from 'dotenv';
 import { Pool } from 'pg';
 import { requireEnv } from '../utils';
+import { logError } from '../utils/logger';
 
 config();
 
@@ -32,8 +33,12 @@ export class PostgreSQL {
     }
 
     async getData(query: string, params?: any[]): Promise<any> {
-        const result = await this.pool.query(query, params);
-        return result.rows;
+        try {
+            const result = await this.pool.query(query, params);
+            return result.rows;
+        } catch (error) {
+            logError("getData", error)
+        }
     }
 
     async addData(query: string, params?: any[]): Promise<boolean> {

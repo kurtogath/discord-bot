@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { PostgreSQL } from '../../db/PostgreSQL';
-import { requireEnv } from '../../utils';
+import { ConfigKeys } from '../../enums/config';
+import { getConfigData } from '../../utils/getConfig';
 
 const postgreSQL = PostgreSQL.getInstance();
 
@@ -45,8 +46,8 @@ async function saveTokenToDb(broadcasterId: string, token: TokenData) {
 }
 
 async function refreshTokens(refresh_token: string): Promise<TokenData> {
-    const clientId = requireEnv('TWITCH_CLIENT_ID');
-    const clientSecret = requireEnv('TWITCH_CLIENT_SECRET');
+    const clientId = await getConfigData(ConfigKeys.TWITCH_CLIENT_ID);
+    const clientSecret = await getConfigData(ConfigKeys.TWITCH_CLIENT_SECRET);
     const response = await axios.post(
         'https://id.twitch.tv/oauth2/token',
         null,
@@ -71,7 +72,7 @@ async function refreshTokens(refresh_token: string): Promise<TokenData> {
 }
 
 export async function getValidAccessToken(): Promise<string> {
-    const broadcasterId = requireEnv('TWITCH_USER_ID');
+    const broadcasterId = await getConfigData(ConfigKeys.TWITCH_USER_ID);
 
     const existing = await getTokenFromDb(broadcasterId);
 

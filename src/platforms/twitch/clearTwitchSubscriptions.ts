@@ -1,12 +1,14 @@
 import axios from 'axios';
-import { requireEnv } from '../../utils';
+import { ConfigKeys } from '../../enums/config';
+import { getConfigData } from '../../utils/getConfig';
 import { getValidAccessToken } from './tokenManager';
 
-const TWITCH_API_URL = requireEnv('TWITCH_API_URL');
 
 export async function clearTwitchSubscriptions() {
+    
     const accessToken = await getValidAccessToken();
-    const clientId = requireEnv('TWITCH_CLIENT_ID');
+    const TWITCH_API_URL = await getConfigData(ConfigKeys.TWITCH_API_URL)
+    const clientId = await getConfigData(ConfigKeys.TWITCH_CLIENT_ID);
 
     // Obtener todas las suscripciones activas
     const subsResponse = await axios.get(TWITCH_API_URL, {
