@@ -10,8 +10,7 @@ export const handleGuildMemberAdd = async (
     discordClient: Client
 ) => {
     try {
-        const canalId = await getConfigData(ConfigKeys.DISCORD_CANAL_TEST)
-        // const canalId = await getConfigData(ConfigKeys.DISCORD_CANAL_BIENVENIDA)
+        const canalId = await getConfigData(ConfigKeys.DISCORD_CANAL_BIENVENIDA)
         const channel = await getTextChannelSafe(discordClient, canalId);
 
         if (channel) {

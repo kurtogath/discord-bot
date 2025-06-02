@@ -15,7 +15,7 @@ const postgreSQL = PostgreSQL.getInstance();
 async function sendLiveMessage(discordClient: DiscordClient) {
     const urlTwitch: string = await getConfigData(ConfigKeys.TWITCH_LINK);
 
-    const canalId = await getConfigData(ConfigKeys.DISCORD_CANAL_TEST);
+    const canalId = await getConfigData(ConfigKeys.DISCORD_CANAL_EN_DIRECTO);
     const EN_VIVO = await getTextChannelSafe(discordClient, canalId);
 
     if (EN_VIVO) {

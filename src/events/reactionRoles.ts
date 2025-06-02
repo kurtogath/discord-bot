@@ -21,8 +21,7 @@ const reactionRoleMap: Record<string, string> = {
 
 
 export async function setupReactionRoles(client: Client) {
-    const canalId = await getConfigData(ConfigKeys.DISCORD_CANAL_TEST);
-    // const canalId = await getConfigData(ConfigKeys.DISCORD_CANAL_BIENVENIDA);
+    const canalId = await getConfigData(ConfigKeys.DISCORD_CANAL_ROLES);
     const channel = await getTextChannelSafe(client, canalId);
     if (channel) {
         const guildId = channel.guild.id;
